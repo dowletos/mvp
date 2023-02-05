@@ -5,11 +5,19 @@ from django.contrib.auth import authenticate,login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from news.models import News,profiles,profilesIndex
+
+
+
 def mainpage(request):
-    return render(request, 'index.html')
+    news = News.objects.order_by('-created_at')
+    pro=profiles.objects.all()
+    return render(request, 'index.html', {'news': news, 'title': 'My title from DB','pro':pro})
+
 
 
 def user_login(request):
+
     if request.method=='POST':
         username1 = request.POST.get('username')
         password = request.POST.get('password')
@@ -26,3 +34,6 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return redirect('/')
+
+
+
