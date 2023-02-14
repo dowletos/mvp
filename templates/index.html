@@ -1,7 +1,0 @@
-<!doctype html>
-{% load static %}
-    {% if not request.user.is_authenticated %}
-    {% include 'login.html' %}
-    {% else %}
-    {% include 'base.html' %}
-    {% endif %}

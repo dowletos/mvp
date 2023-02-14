@@ -5,15 +5,42 @@ from django.contrib.auth import authenticate,login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from news.models import News,profiles,profilesIndex
+from news.models import News,profiles,profilesIndex,View_UserSet
+from .forms import register_new_user_form
 
 
 
 def mainpage(request):
-    news = News.objects.order_by('-created_at')
-    pro=profiles.objects.all()
-    return render(request, 'index.html', {'news': news, 'title': 'My title from DB','pro':pro})
 
+    UserSet=View_UserSet.objects.filter(username__exact=request.user)
+    return render(request, 'login.html', { 'title': 'Добро пожаловать','UserSet':UserSet})
+
+
+def users_edit(request):
+    UserSet = View_UserSet.objects.filter(username__exact=request.user)
+
+    if request.method == 'POST':
+        NF = register_new_user_form(request.POST)
+        print(NF.errors)
+        if NF.is_valid():
+            NF.save()
+            return render(request, 'users_edit.html', {'NF': NF, 'title': 'Добро пожаловать', 'UserSet': UserSet})
+
+    else:
+        NF = register_new_user_form()
+    return render(request, 'users_edit.html', {'NF': NF, 'title': 'Добро пожаловать', 'UserSet':UserSet})
+
+
+def user_profile_settings(request):
+    UserSet = View_UserSet.objects.filter(username__exact=request.user)
+
+    if request.method == 'POST':
+        NF = register_new_user_form(request.POST)
+        if NF.is_valid():
+            register_new_user_form.objects.create(NF.cleaned_data)
+    else:
+        NF = register_new_user_form()
+    return render(request, 'profile.html', {'NF': NF, 'title': 'Добро пожаловать', 'UserSet': UserSet})
 
 
 def user_login(request):

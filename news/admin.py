@@ -20,8 +20,8 @@ admin.site.register(category,categoryAdmin)
 
 
 class subCategoryAdmin(admin.ModelAdmin):
-    list_display = ('subCategoryTitle','subCategoryLink')
-    list_display_links = ('subCategoryTitle','subCategoryLink')
+    list_display = ('subCategoryTitle','subCategoryLink','subCategorySort')
+    list_display_links = ('subCategoryTitle','subCategoryLink','subCategorySort')
     search_fields = ('subCategoryTitle',)
 
 admin.site.register(subCategory,subCategoryAdmin)

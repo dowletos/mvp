@@ -26,7 +26,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',mainpage),
     path('login',user_login,name='login'),
-    path('logout',user_logout,name='logout')
+    path('logout',user_logout,name='logout'),
+    path('users_edit',users_edit,name='users_edit'),
+    path('profiles',user_profile_settings,name='profiles')
 ]
 
 if settings.DEBUG:
